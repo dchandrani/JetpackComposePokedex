@@ -140,7 +140,10 @@ fun PokemonList(
         }
 
         items(itemCount) {
-            if (it >= itemCount - 1 && !endReached) {
+            if (it >= itemCount - 1 &&
+                !endReached &&
+                !isLoading
+            ) {
                 viewModel.loadPokemonPaginated()
             }
             PokedexRow(rowIndex = it, entries = pokemonList, navController = navController)
@@ -151,9 +154,9 @@ fun PokemonList(
         contentAlignment = Center,
         modifier = Modifier.fillMaxSize()
     ) {
-       if (isLoading) {
-           CircularProgressIndicator(color = MaterialTheme.colors.primary)
-       }
+        if (isLoading) {
+            CircularProgressIndicator(color = MaterialTheme.colors.primary)
+        }
 
         if (loadError.isNotEmpty()) {
             RetrySection(error = loadError) {
